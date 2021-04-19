@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, FlexCentered, Title } from '~/common/styles'
 
 const App = function _App() {
-  return (
+return (
     <Container>
 			<FlexCentered>
 				<Title>
@@ -10,7 +10,7 @@ const App = function _App() {
 				</Title>
 			</FlexCentered>
 		</Container>
-  )
+)
 }
 
 export default App
