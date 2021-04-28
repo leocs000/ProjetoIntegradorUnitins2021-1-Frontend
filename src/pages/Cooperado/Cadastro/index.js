@@ -1,9 +1,10 @@
 import React from 'react'
 import { CardHeader, UnInput, UnSelect } from '~/common/components'
 import { Card, Container, Content, InputWrapper, UnForm } from '~/common/styles'
-import { Button } from '~/primereact'
+import { Button, Dialog} from '~/primereact'
 
 const Cadastro = () => {
+	const [modalVisibility, setModalVisibility] = React.useState(false)
 	const [groupOptions] = React.useState([
 		{label: 'Recanto', value: 1},
 		{label: 'Cargueiros', value: 2},
@@ -12,16 +13,13 @@ const Cadastro = () => {
 		{label: 'Itabinhas', value: 5}
 	])
 
-	function cadastrar(form) {
-		// eslint-disable-next-line no-console
-		console.log('cadastro não implementado', form)
-	}
+	function cadastrar(form) {}
 
 	return (
 		<Container >
 			<Content className='p-d-flex p-jc-center p-ai-center layout-content'>
 				<Card className='p-fluid'>
-					<CardHeader title='Cadastro de Técnico'/>
+					<CardHeader title='Cadastro de Cooperado'/>
 					<UnForm onSubmit={cadastrar}>
 						<InputWrapper columns={2} gap='10px'>
 							<UnInput name='name' label='Nome' required/>
@@ -32,16 +30,25 @@ const Cadastro = () => {
 							<UnInput name='cpf' mask='999.999.999-99' label='CPF' required/>
 							<UnInput name='phone' mask='(99) 9 9999-9999' label='Telefone' required/>
 						</InputWrapper>
-						<InputWrapper columns={2} gap='10px'>
-							<UnInput name='register' label='# do Registro' required/>
-							<UnSelect name='group' label='Grupo de Usuário' options={groupOptions} required/>
-						</InputWrapper>
-						<UnInput type='password' name='password' label='Senha' required/>
-						<UnInput type='password' name='passwordConfirm' label='Confirmação de Senha' required/>
-						<Button type='submit' label='Cadastrar'/>
 					</UnForm>
+						<Button type='submit' label='Continuar' onClick={() => setModalVisibility(true)}/>
 				</Card>
 			</Content>
+			<Dialog className='p-fluid' visible={modalVisibility} onHide={() => setModalVisibility(false)} breakpoints={{'960px': '75vw', '640px': '100vw'}} style={{width: '50vw'}}>
+				<CardHeader title='Dados da Propriedade'/>
+				<UnForm>
+					<InputWrapper columns={2} gap='10px'>
+						<UnInput name='nome' label='Nome'/>
+						<UnInput name='area' label='Tamanho'/>
+					</InputWrapper>
+					<UnInput name='localidade' label='Localidade' />
+					<InputWrapper columns={2} gap='10px'>
+						<UnInput name='registro' label='# da Matrícula'/>
+						<UnInput name='grupo' label='Técnico Responsável'/>
+					</InputWrapper>
+				</UnForm>
+					<Button label='Enviar'/>
+			</Dialog>
 		</Container>
 	)
 }
