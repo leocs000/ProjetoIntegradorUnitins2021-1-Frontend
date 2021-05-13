@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useField } from '@unform/core'
-import { Dropdown } from '~/primereact'
+import { Dropdown, Toast } from '~/primereact'
 
-const UnSelect = ({ name, label, options, ...rest }) => {
+const UnSelect = ({ name, label, options, className, value, isMulti, ...rest }) => {
+	const toast = React.useRef(null)
 	const selectRef = React.useRef(null)
-	const [value, setValue] = React.useState(null)
+	const [selectValue, setValue] = React.useState(null)
 	const { fieldName, registerField } = useField(name)
 
 	React.useEffect(() => {
@@ -20,17 +21,14 @@ const UnSelect = ({ name, label, options, ...rest }) => {
 		})
 	},[fieldName, registerField])
 
-	React.useCallback(() => {
-
-	}, [])
-
 	return (
-		<div className='p-field'>
+		<div className={`p-field ${className}`}>
+			<Toast ref={toast}/>
 			<label>{label}</label>
 			<Dropdown
 				ref={selectRef}
 				options={options}
-				value={value}
+				value={value||selectValue}
 				onChange={s => setValue(s.value)}
 				{...rest}
 			/>
@@ -47,7 +45,10 @@ UnSelect.propTypes = {
 			PropTypes.number
 		]),
 		label: PropTypes.string
-	}))
+	})),
+	className: PropTypes.string,
+	value: PropTypes.any,
+	isMulti: PropTypes.bool
 }
 
 export default UnSelect
